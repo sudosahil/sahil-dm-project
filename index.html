@@ -6,134 +6,224 @@
   <title>Loan Approval System</title>
   <style>
     :root {
-      --bg: #0a0f1e;
-      --surface: #111827;
-      --surface2: #1a2234;
-      --border: #1f2d45;
-      --accent: #3b82f6;
-      --accent2: #60a5fa;
-      --text: #e2e8f0;
-      --muted: #64748b;
-      --green: #4ade80;
-      --red: #f87171;
-      --radius: 14px;
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --surface2: #f0f0f2;
+      --border: #e0e0e5;
+      --border2: #d0d0d8;
+      --text: #111118;
+      --muted: #6b6b80;
+      --muted2: #9999aa;
+      --accent: #2563eb;
+      --accent-bg: #eff6ff;
+      --green: #16a34a;
+      --green-bg: #f0fdf4;
+      --green-border: #bbf7d0;
+      --red: #dc2626;
+      --red-bg: #fef2f2;
+      --red-border: #fecaca;
+      --radius: 12px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg); color: var(--text);
-      min-height: 100vh; padding: 24px 16px 48px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 16px 60px;
     }
-    header { text-align: center; margin-bottom: 32px; }
-    .badge {
-      display: inline-block;
-      background: rgba(59,130,246,0.1); color: var(--accent2);
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
-      margin-bottom: 12px; border: 1px solid rgba(59,130,246,0.25);
-    }
-    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
-    header p { color: var(--muted); margin-top: 6px; font-size: 0.9rem; }
 
     .container { max-width: 680px; margin: 0 auto; }
 
+    /* Header */
+    header { text-align: center; margin-bottom: 32px; }
+    .badge {
+      display: inline-block;
+      background: var(--accent-bg); color: var(--accent);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 4px 12px;
+      border-radius: 20px; margin-bottom: 12px;
+      border: 1px solid #bfdbfe;
+    }
+    header h1 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+    header p { color: var(--muted); margin-top: 6px; font-size: 0.92rem; }
+
+    /* Cards */
     .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px; margin-bottom: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px; margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
     .card-title {
-      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.1em; color: var(--muted); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
     }
+    .card-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
+    /* Form grid */
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 500px) { .form-grid { grid-template-columns: 1fr; } }
 
-    .field { display: flex; flex-direction: column; gap: 5px; }
-    label { font-size: 0.84rem; color: var(--muted); font-weight: 500; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.84rem; color: var(--muted); font-weight: 600; }
 
-    input[type="text"], input[type="number"], select {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--text); font-size: 0.92rem;
-      padding: 9px 13px; outline: none; transition: border-color 0.2s; width: 100%;
+    input[type="text"], input[type="number"] {
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 8px; color: var(--text); font-size: 0.93rem;
+      padding: 10px 13px; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s; width: 100%;
     }
-    input:focus, select:focus { border-color: var(--accent); }
-    input::placeholder { color: var(--muted); }
+    input[type="text"]:focus, input[type="number"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+      background: #fff;
+    }
+    input::placeholder { color: var(--muted2); }
 
+    /* Range sliders */
+    .range-wrap { display: flex; flex-direction: column; gap: 4px; }
+    .range-header { display: flex; justify-content: space-between; align-items: center; }
+    .range-val {
+      font-size: 0.88rem; font-weight: 700; color: var(--accent);
+      background: var(--accent-bg); padding: 2px 10px; border-radius: 20px;
+      border: 1px solid #bfdbfe;
+    }
     input[type="range"] {
-      -webkit-appearance: none; width: 100%; height: 5px; border-radius: 3px;
-      background: var(--surface2); border: none; padding: 0; cursor: pointer; margin-top: 6px;
+      -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px;
+      background: var(--border); border: none; padding: 0; cursor: pointer;
     }
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 17px; height: 17px; border-radius: 50%;
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: var(--accent); cursor: pointer; border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(37,99,235,0.3);
     }
-    .range-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
-    .range-val {
-      font-size: 0.82rem; font-weight: 700; color: var(--accent2);
-      background: rgba(59,130,246,0.12); padding: 2px 9px; border-radius: 20px;
-      display: inline-block; margin-top: 5px;
-    }
+    .range-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted2); }
 
+    /* Employed toggle */
     .toggle-row {
-      display: flex; background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; overflow: hidden;
+      display: flex; background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 8px; overflow: hidden; padding: 3px; gap: 3px;
     }
     .toggle-row button {
       flex: 1; padding: 9px; cursor: pointer; border: none;
-      background: none; color: var(--muted); font-size: 0.88rem; font-weight: 500;
-      transition: all 0.15s;
+      background: none; color: var(--muted); font-size: 0.88rem; font-weight: 600;
+      border-radius: 6px; transition: all 0.15s;
     }
-    .toggle-row button.active { background: var(--accent); color: #fff; }
+    .toggle-row button.active {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.25);
+    }
 
+    /* Buttons */
     .btn-primary {
       width: 100%; padding: 12px;
       background: var(--accent); color: #fff;
-      border: none; border-radius: 8px;
-      font-size: 0.93rem; font-weight: 600;
-      cursor: pointer; margin-top: 14px;
+      border: none; border-radius: 9px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; margin-top: 16px;
+      box-shadow: 0 2px 10px rgba(37,99,235,0.25);
       transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
     }
-    .btn-primary:hover { opacity: 0.87; }
+    .btn-primary:hover { opacity: 0.88; }
     .btn-primary:active { transform: scale(0.98); }
 
     .btn-ghost {
-      width: 100%; padding: 10px; background: none; color: var(--muted);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: 0.88rem; cursor: pointer; margin-top: 8px;
+      width: 100%; padding: 11px; background: none; color: var(--muted);
+      border: 1px solid var(--border2); border-radius: 9px;
+      font-size: 0.88rem; font-weight: 500; cursor: pointer; margin-top: 8px;
       transition: border-color 0.2s, color 0.2s;
     }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── TERMINAL ── */
-    .terminal {
-      background: #0d1117; border: 1px solid #30363d;
-      border-radius: 10px; overflow: hidden; margin-bottom: 16px;
-      font-family: 'Fira Code', 'Courier New', monospace;
+    /* Result banner */
+    .result-banner {
+      border-radius: var(--radius); padding: 28px 24px;
+      text-align: center; margin-bottom: 14px;
     }
-    .terminal-header {
-      background: #161b22; border-bottom: 1px solid #30363d;
-      padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+    .result-banner.approved {
+      background: var(--green-bg); border: 1px solid var(--green-border);
     }
-    .terminal-header span { font-size: 0.75rem; color: #8b949e; font-family: inherit; }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
-    .terminal-body {
-      padding: 18px 20px; white-space: pre; overflow-x: auto;
-      font-size: 0.86rem; line-height: 1.75; color: #c9d1d9;
+    .result-banner.rejected {
+      background: var(--red-bg); border: 1px solid var(--red-border);
+    }
+    .result-icon { font-size: 2.8rem; margin-bottom: 6px; line-height: 1; }
+    .result-for { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .result-verdict { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; }
+    .approved .result-verdict { color: var(--green); }
+    .rejected .result-verdict { color: var(--red); }
+    .result-sub { font-size: 0.88rem; color: var(--muted); margin-top: 8px; }
+
+    /* Propositions grid */
+    .prop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 500px) { .prop-grid { grid-template-columns: 1fr; } }
+
+    .prop-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 9px; padding: 11px 14px;
+    }
+    .prop-key {
+      font-size: 0.72rem; font-weight: 800; color: var(--accent);
+      background: var(--accent-bg); padding: 2px 7px; border-radius: 4px;
+      margin-right: 2px; flex-shrink: 0;
+    }
+    .prop-text { font-size: 0.83rem; color: var(--text); }
+    .bool-badge {
+      font-size: 0.72rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+    }
+    .bool-badge.t { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    .bool-badge.f { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+    /* Basic eligibility row */
+    .eligibility-row {
+      display: flex; gap: 10px; margin-bottom: 0;
+    }
+    .eligibility-item {
+      flex: 1; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 9px; padding: 12px 14px; text-align: center;
+    }
+    .eligibility-item.pass { background: var(--green-bg); border-color: var(--green-border); }
+    .eligibility-item.fail { background: var(--red-bg); border-color: var(--red-border); }
+    .eligibility-item .e-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .eligibility-item .e-val { font-size: 0.9rem; font-weight: 700; }
+    .eligibility-item.pass .e-val { color: var(--green); }
+    .eligibility-item.fail .e-val { color: var(--red); }
+
+    /* Truth table */
+    .truth-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead th {
+      text-align: center; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted);
+      padding: 8px 12px; border-bottom: 2px solid var(--border);
+      background: var(--surface2);
+    }
+    thead th:first-child { border-radius: 8px 0 0 0; }
+    thead th:last-child  { border-radius: 0 8px 0 0; }
+    tbody td { text-align: center; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr.highlight { background: #eff6ff; }
+    tbody tr.highlight td { font-weight: 600; }
+    .t-true  { color: var(--green); font-weight: 600; }
+    .t-false { color: var(--red); }
+    .score-badge {
+      display: inline-block; width: 24px; height: 24px; border-radius: 50%;
+      font-size: 0.8rem; font-weight: 700; line-height: 24px;
+      background: var(--surface2); color: var(--muted);
+    }
+    .score-badge.ok { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    .you-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      background: var(--accent); color: #fff; padding: 1px 7px;
+      border-radius: 20px; margin-left: 4px; vertical-align: middle;
     }
 
-    /* Colour classes used in innerHTML */
-    .hl-header  { color: #58a6ff; font-weight: bold; }
-    .hl-key     { color: #a78bfa; }
-    .hl-true    { color: #4ade80; font-weight: bold; }
-    .hl-false   { color: #f87171; font-weight: bold; }
-    .hl-sep     { color: #30363d; }
-    .hl-name    { color: #fbbf24; font-weight: bold; }
-    .hl-ok      { color: #4ade80; font-weight: bold; }
-    .hl-fail    { color: #f87171; font-weight: bold; }
-    .hl-row     { background: rgba(59,130,246,0.12); display: inline-block; width: 100%; }
-    .hl-muted   { color: #8b949e; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
@@ -144,175 +234,215 @@
     <p>Evaluates loan eligibility using propositions and truth tables.</p>
   </header>
 
-  <!-- Form -->
+  <!-- ── FORM ── -->
   <div id="formSection">
     <div class="card">
-      <div class="card-title">Enter Applicant Details</div>
+      <div class="card-title">Applicant Details</div>
       <div class="form-grid">
 
         <div class="field" style="grid-column:1/-1;">
-          <label>Applicant Name</label>
-          <input type="text" id="name" placeholder="e.g. Rahul Sharma" />
+          <label>Full Name</label>
+          <input type="text" id="inp-name" placeholder="e.g. Rahul Sharma" />
         </div>
 
         <div class="field">
-          <label>Age &nbsp;<span class="range-val" id="ageVal">30</span></label>
-          <input type="range" id="age" min="18" max="70" value="30"
-            oninput="document.getElementById('ageVal').textContent=this.value" />
-          <div class="range-labels"><span>18</span><span>70</span></div>
+          <div class="range-wrap">
+            <div class="range-header">
+              <label>Age</label>
+              <span class="range-val" id="ageVal">30</span>
+            </div>
+            <input type="range" id="inp-age" min="18" max="70" value="30"
+              oninput="document.getElementById('ageVal').textContent=this.value" />
+            <div class="range-labels"><span>18 yrs</span><span>70 yrs</span></div>
+          </div>
         </div>
 
         <div class="field">
           <label>Monthly Income (Rs.)</label>
-          <input type="number" id="income" placeholder="e.g. 35000" min="0" />
+          <input type="number" id="inp-income" placeholder="e.g. 35000" min="0" />
         </div>
 
         <div class="field">
-          <label>Credit Score &nbsp;<span class="range-val" id="creditVal">700</span></label>
-          <input type="range" id="creditScore" min="300" max="900" value="700"
-            oninput="document.getElementById('creditVal').textContent=this.value" />
-          <div class="range-labels"><span>300</span><span>900</span></div>
+          <div class="range-wrap">
+            <div class="range-header">
+              <label>Credit Score</label>
+              <span class="range-val" id="creditVal">700</span>
+            </div>
+            <input type="range" id="inp-credit" min="300" max="900" value="700"
+              oninput="document.getElementById('creditVal').textContent=this.value" />
+            <div class="range-labels"><span>300</span><span>900</span></div>
+          </div>
         </div>
 
         <div class="field">
-          <label>Number of Existing Loans</label>
-          <input type="number" id="existingLoans" placeholder="0" min="0" value="0" />
+          <label>Existing Loans</label>
+          <input type="number" id="inp-loans" placeholder="0" min="0" value="0" />
         </div>
 
         <div class="field" style="grid-column:1/-1;">
           <label>Currently Employed?</label>
           <div class="toggle-row">
             <button id="empYes" class="active" onclick="setEmployed(true)">Yes</button>
-            <button id="empNo" onclick="setEmployed(false)">No</button>
+            <button id="empNo"  onclick="setEmployed(false)">No</button>
           </div>
         </div>
 
       </div>
-      <button class="btn-primary" onclick="evaluate()">Evaluate Application</button>
+      <button class="btn-primary" onclick="runEvaluation()">Check Eligibility →</button>
     </div>
   </div>
 
-  <!-- Terminal Output -->
-  <div id="results" style="display:none;">
-    <div class="terminal">
-      <div class="terminal-header">
-        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-        <span>loan_approval.py — output</span>
-      </div>
-      <div class="terminal-body" id="termOutput"></div>
+  <!-- ── RESULTS ── -->
+  <div id="resultsSection" class="hidden">
+
+    <div class="result-banner" id="resBanner">
+      <div class="result-icon" id="resIcon"></div>
+      <div class="result-for" id="resFor"></div>
+      <div class="result-verdict" id="resVerdict"></div>
+      <div class="result-sub" id="resSub"></div>
     </div>
-    <button class="btn-primary" onclick="checkAnother()">Check Another Applicant</button>
-    <button class="btn-ghost" onclick="checkAnother()">← Back to Form</button>
+
+    <div class="card">
+      <div class="card-title">Propositions</div>
+      <div class="prop-grid" id="propGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Eligibility Check</div>
+      <div class="eligibility-row" id="eligRow"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Truth Table — P2, P3, P5 (Financial Conditions)</div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:12px;">
+        Assuming P1 = True, P4 = True. Highlighted row = your application.
+      </p>
+      <div class="truth-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>P2<br><span style="font-weight:400;text-transform:none;letter-spacing:0">Income</span></th>
+              <th>P3<br><span style="font-weight:400;text-transform:none;letter-spacing:0">Credit</span></th>
+              <th>P5<br><span style="font-weight:400;text-transform:none;letter-spacing:0">Loans</span></th>
+              <th>Score</th>
+              <th>Approved</th>
+            </tr>
+          </thead>
+          <tbody id="truthBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="goBack()">← Check Another Applicant</button>
+    <button class="btn-ghost"   onclick="goBack()">Back to Form</button>
   </div>
 </div>
 
 <script>
-  let employed = true;
+  var isEmployed = true;
+
   function setEmployed(v) {
-    employed = v;
-    document.getElementById('empYes').classList.toggle('active', v);
-    document.getElementById('empNo').classList.toggle('active', !v);
+    isEmployed = v;
+    document.getElementById('empYes').classList.toggle('active', v === true);
+    document.getElementById('empNo').classList.toggle('active', v === false);
   }
 
-  function boolStr(v) { return v ? 'True' : 'False'; }
-  function boolSpan(v) { return `<span class="${v?'hl-true':'hl-false'}">${boolStr(v)}</span>`; }
+  function runEvaluation() {
+    var name   = document.getElementById('inp-name').value.trim();
+    var age    = parseInt(document.getElementById('inp-age').value, 10);
+    var income = parseFloat(document.getElementById('inp-income').value) || 0;
+    var credit = parseInt(document.getElementById('inp-credit').value, 10);
+    var loans  = parseInt(document.getElementById('inp-loans').value, 10) || 0;
 
-  function evaluate() {
-    const name   = document.getElementById('name').value.trim();
-    const age    = parseInt(document.getElementById('age').value);
-    const income = parseFloat(document.getElementById('income').value) || 0;
-    const credit = parseInt(document.getElementById('creditScore').value);
-    const loans  = parseInt(document.getElementById('existingLoans').value) || 0;
+    if (!name) { alert('Please enter the applicant name.'); return; }
 
-    if (!name) return alert('Please enter the applicant name.');
+    // Propositions (mirrors Python logic exactly)
+    var P1 = (age >= 21 && age <= 60);
+    var P2 = (income >= 25000);
+    var P3 = (credit >= 650);
+    var P4 = isEmployed;
+    var P5 = (loans <= 2);
 
-    // ── Propositions — mirrors Python exactly ──
-    const P1 = age >= 21 && age <= 60;
-    const P2 = income >= 25000;
-    const P3 = credit >= 650;
-    const P4 = employed;
-    const P5 = loans <= 2;
+    var basicOk  = P1 && P4;
+    var finScore = (P2?1:0) + (P3?1:0) + (P5?1:0);
+    var finOk    = finScore >= 2;
+    var approved = basicOk && finOk;
 
-    const basicOk  = P1 && P4;
-    const finScore = [P2, P3, P5].filter(Boolean).length;
-    const finOk    = finScore >= 2;
-    const approved = basicOk && finOk;
+    // ── Result banner ──
+    var banner = document.getElementById('resBanner');
+    banner.className = 'result-banner ' + (approved ? 'approved' : 'rejected');
+    document.getElementById('resIcon').textContent    = approved ? '✓' : '✗';
+    document.getElementById('resFor').textContent     = 'Result for ' + name;
+    document.getElementById('resVerdict').textContent = approved ? 'LOAN APPROVED' : 'LOAN REJECTED';
 
-    // ── Build terminal output ──
-    const L = []; // lines (HTML strings)
-
-    L.push(`<span class="hl-header">=== LOAN APPROVAL SYSTEM (Propositional Logic) ===</span>`);
-    L.push('');
-    L.push('Enter applicant details:');
-    L.push(`  Applicant name : <span class="hl-name">${name}</span>`);
-    L.push(`  Age            : ${age}`);
-    L.push(`  Monthly income : Rs. ${income.toLocaleString('en-IN')}`);
-    L.push(`  Credit score   : ${credit}`);
-    L.push(`  Employed       : ${boolStr(employed)}`);
-    L.push(`  Existing loans : ${loans}`);
-
-    // Propositions section
-    L.push('');
-    L.push(`<span class="hl-header">--- PROPOSITIONS ---</span>`);
-    L.push(`  <span class="hl-key">P1</span> (Age between 21-60)         : ${boolSpan(P1)}`);
-    L.push(`  <span class="hl-key">P2</span> (Income >= Rs. 25,000)       : ${boolSpan(P2)}`);
-    L.push(`  <span class="hl-key">P3</span> (Credit score >= 650)        : ${boolSpan(P3)}`);
-    L.push(`  <span class="hl-key">P4</span> (Currently employed)         : ${boolSpan(P4)}`);
-    L.push(`  <span class="hl-key">P5</span> (Existing loans <= 2)        : ${boolSpan(P5)}`);
-
-    // Truth table section — identical to Python output
-    L.push('');
-    L.push(`<span class="hl-header">--- TRUTH TABLE (All possible cases for P2, P3, P5) ---</span>`);
-    L.push('<span class="hl-muted">Assuming P1=True, P4=True (basic eligibility met)</span>');
-
-    const col = (s, w) => s.padEnd(w);
-    L.push(col('P2', 7) + col('P3', 7) + col('P5', 7) + col('Financial Score', 19) + 'Approved');
-    L.push('<span class="hl-sep">' + '-'.repeat(50) + '</span>');
-
-    for (const p2 of [true, false]) {
-      for (const p3 of [true, false]) {
-        for (const p5 of [true, false]) {
-          const score = [p2, p3, p5].filter(Boolean).length;
-          const ok    = score >= 2;
-          const isMe  = p2 === P2 && p3 === P3 && p5 === P5;
-          const row =
-            `  ${col(boolStr(p2), 7)}${col(boolStr(p3), 7)}${col(boolStr(p5), 7)}${col(String(score), 19)}${boolStr(ok)}`;
-          if (isMe) {
-            L.push(`<span class="hl-row">${row}  ◄ your application</span>`);
-          } else {
-            L.push(row);
-          }
-        }
-      }
-    }
-
-    // Result section
-    L.push('');
-    L.push(`<span class="hl-header">--- RESULT FOR ${name.toUpperCase()} ---</span>`);
+    var subMsg = '';
     if (!basicOk) {
-      L.push(`  <span class="hl-fail">Basic eligibility FAILED (Age or Employment condition not met)</span>`);
+      if (!P1 && !P4) subMsg = 'Age out of range and not employed.';
+      else if (!P1)   subMsg = 'Age must be between 21 and 60.';
+      else            subMsg = 'Applicant must be currently employed.';
     } else {
-      L.push(`  <span class="hl-ok">Basic eligibility PASSED</span>`);
-      L.push(`  Financial conditions met: ${finScore} out of 3 (need at least 2)`);
+      subMsg = 'Basic eligibility passed · Financial score: ' + finScore + '/3 (need at least 2)';
     }
-    L.push('');
-    if (approved) {
-      L.push(`  <span class="hl-ok">✓ LOAN APPROVED</span>`);
-    } else {
-      L.push(`  <span class="hl-fail">✗ LOAN REJECTED</span>`);
-    }
-    L.push('');
-    L.push(`<span class="hl-muted">=== DONE ===</span>`);
+    document.getElementById('resSub').textContent = subMsg;
 
-    document.getElementById('termOutput').innerHTML = L.join('\n');
-    document.getElementById('formSection').style.display = 'none';
-    document.getElementById('results').style.display = 'block';
+    // ── Propositions ──
+    var props = [
+      { key:'P1', text:'Age between 21–60',     val:P1 },
+      { key:'P2', text:'Income ≥ Rs. 25,000',   val:P2 },
+      { key:'P3', text:'Credit score ≥ 650',    val:P3 },
+      { key:'P4', text:'Currently employed',    val:P4 },
+      { key:'P5', text:'Existing loans ≤ 2',    val:P5 },
+    ];
+    document.getElementById('propGrid').innerHTML = props.map(function(p) {
+      return '<div class="prop-row">' +
+        '<span><span class="prop-key">' + p.key + '</span> <span class="prop-text">' + p.text + '</span></span>' +
+        '<span class="bool-badge ' + (p.val ? 't' : 'f') + '">' + (p.val ? 'TRUE' : 'FALSE') + '</span>' +
+        '</div>';
+    }).join('');
+
+    // ── Eligibility summary ──
+    document.getElementById('eligRow').innerHTML =
+      '<div class="eligibility-item ' + (P1&&P4 ? 'pass' : 'fail') + '">' +
+        '<div class="e-label">Basic Eligibility</div>' +
+        '<div class="e-val">' + (P1&&P4 ? '✓ Passed' : '✗ Failed') + '</div>' +
+      '</div>' +
+      '<div class="eligibility-item ' + (finOk ? 'pass' : 'fail') + '">' +
+        '<div class="e-label">Financial Score</div>' +
+        '<div class="e-val">' + finScore + ' / 3 ' + (finOk ? '✓' : '✗') + '</div>' +
+      '</div>';
+
+    // ── Truth table ──
+    var rows = '';
+    var combos = [
+      [true,true,true],[true,true,false],[true,false,true],[true,false,false],
+      [false,true,true],[false,true,false],[false,false,true],[false,false,false]
+    ];
+    combos.forEach(function(combo) {
+      var p2=combo[0], p3=combo[1], p5=combo[2];
+      var score = (p2?1:0)+(p3?1:0)+(p5?1:0);
+      var ok    = score >= 2;
+      var isMe  = (p2===P2 && p3===P3 && p5===P5);
+      rows += '<tr' + (isMe ? ' class="highlight"' : '') + '>' +
+        '<td class="' + (p2?'t-true':'t-false') + '">' + (p2?'True':'False') + '</td>' +
+        '<td class="' + (p3?'t-true':'t-false') + '">' + (p3?'True':'False') + '</td>' +
+        '<td class="' + (p5?'t-true':'t-false') + '">' + (p5?'True':'False') + '</td>' +
+        '<td><span class="score-badge ' + (ok?'ok':'') + '">' + score + '</span></td>' +
+        '<td class="' + (ok?'t-true':'t-false') + '">' + (ok?'Yes':'No') +
+          (isMe ? '<span class="you-tag">You</span>' : '') +
+        '</td>' +
+      '</tr>';
+    });
+    document.getElementById('truthBody').innerHTML = rows;
+
+    // ── Show results ──
+    document.getElementById('formSection').classList.add('hidden');
+    document.getElementById('resultsSection').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function checkAnother() {
-    document.getElementById('formSection').style.display = 'block';
-    document.getElementById('results').style.display = 'none';
+  function goBack() {
+    document.getElementById('formSection').classList.remove('hidden');
+    document.getElementById('resultsSection').classList.add('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
